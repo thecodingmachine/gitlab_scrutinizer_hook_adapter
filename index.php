@@ -6,6 +6,11 @@ $app = new \Slim\Slim();
 $app->post('/hook/:name', function ($name) use ($app) {
     $body = json_decode($app->request->getBody(), true);
 
+    if (isset($body["object_kind"]) && $body["object_kind"] == "merge_request") {
+        error_log("Merge requests not supported yet");
+        return;
+    }
+
     $before = $body['before'];
     $after = $body['after'];
     $ref = $body['ref'];
