@@ -23,12 +23,10 @@ $app->post('/hook/:name', function ($name) use ($app) {
 
     $client = new GuzzleHttp\Client(['base_url' => 'https://scrutinizer-ci.com']);
 
-    $response = $client->post('/api/repositories/gp/'.$name.'/callbacks/post-receive?access_token='.SCRUTINIZER_API_TOKEN, [
+    $client->post('/api/repositories/gp/'.$name.'/callbacks/post-receive?access_token='.SCRUTINIZER_API_TOKEN, [
         'headers' => ['Content-Type' => 'application/json'],
         'body' => json_encode($scrutinizerHookMessage)
     ]);
 
-    error_log("Api call answer");
-    error_log($response->getBody());
 });
 $app->run();
